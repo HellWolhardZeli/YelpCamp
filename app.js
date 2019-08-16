@@ -14,11 +14,6 @@ var campGroundsSchema = new mongoose.Schema({
 
 var campGrounds = mongoose.model("campGrounds", campGroundsSchema);
 
-
-
-
-
-
 app.get("/", function (req, res) {
     res.render("home.ejs");
 });
@@ -44,7 +39,7 @@ app.post("/campGrounds", function (req, res) {
         if (err) {
             console.log("Error");
         } else {
-            res.render("campGrounds", { campGrounds: campGrounds });
+            res.render("campGrounds.ejs", { campGrounds: campGrounds });
         }
     })
 
