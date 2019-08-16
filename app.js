@@ -21,7 +21,12 @@ app.get("/", function (req, res) {
 app.get("/campGrounds", function (req, res) {
 
     campGrounds.find({}, function (err, campGrounds) {
-        res.render("campGrounds.ejs", { campGrounds: campGrounds });
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.render("campGrounds.ejs", { campGrounds: campGrounds });
+        }
     })
 
 
@@ -37,9 +42,9 @@ app.post("/campGrounds", function (req, res) {
     var newCampGrounds = { name: name, image: image };
     campGrounds.create(newCampGrounds, function (err, campGrounds) {
         if (err) {
-            console.log("Error");
+            console.log(err);
         } else {
-            res.render("campGrounds.ejs", { campGrounds: campGrounds });
+            res.redirect("/campGrounds");
         }
     })
 
