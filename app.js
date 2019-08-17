@@ -9,7 +9,8 @@ app.use(parser.urlencoded({ extended: true }));
 
 var campGroundsSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    description: String
 });
 
 var campGrounds = mongoose.model("campGrounds", campGroundsSchema);
@@ -25,15 +26,24 @@ app.get("/campGrounds", function (req, res) {
             console.log(err);
         }
         else {
-            res.render("campGrounds.ejs", { campGrounds: campGrounds });
+            res.render("index.ejs", { campGrounds: campGrounds });
         }
-    })
-
-
+    });
 });
 
 app.get("/campGrounds/new", function (req, res) {
     res.render("new.ejs");
+});
+
+app.get("/campGrounds/:id", function (req, res) {
+    campGrounds.findById(req.params.id, function (err, foundCampGround) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.render("show.ejs", { campGrounds: foundCampGround });
+        }
+    });
 });
 
 app.post("/campGrounds", function (req, res) {
@@ -49,13 +59,6 @@ app.post("/campGrounds", function (req, res) {
     })
 
 });
-
-
-
-
-
-
-
 
 
 
