@@ -20,16 +20,13 @@ var commentRoutes = require("./routes/comments"),
   campgroundRoutes = require("./routes/campgrounds"),
   indexRoutes = require("./routes/index");
 
-// assign mongoose promise library and connect to database
-mongoose.Promise = global.Promise;
-
 mongoose
   .connect(
-    "mongodb+srv://Aditya:admin@yelpcamp-4oxv2.mongodb.net/test?retryWrites=true&w=majority",
+    "mongodb://Aditya:Aditya@yelpcamp-shard-00-00-4oxv2.mongodb.net:27017,yelpcamp-shard-00-01-4oxv2.mongodb.net:27017,yelpcamp-shard-00-02-4oxv2.mongodb.net:27017/test?ssl=true&replicaSet=YelpCamp-shard-0&authSource=admin&retryWrites=true&w=majority",
     { useNewUrlParser: true }
   )
   .then(() => console.log(`Database connected`))
-  .catch((err) => console.log(`Database connection error: ${err.message}`));
+  .catch((err) => console.log(`Database connection error: ${err}`));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
@@ -38,7 +35,7 @@ app.use(methodOverride("_method"));
 app.use(cookieParser("secret"));
 //require moment
 app.locals.moment = require("moment");
-// seedDB(); //seed the database
+seedDB();
 
 // PASSPORT CONFIGURATION
 app.use(
@@ -67,7 +64,7 @@ app.use("/", indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 
-app.listen(process.env.PORT, process.env.IP, function () {
-  console.log("The YelpCamp Server Has Started!");
-});
-// app.listen(3000);
+// app.listen(process.env.PORT, process.env.IP, function () {
+//   console.log("The YelpCamp Server Has Started!");
+// });
+app.listen(4000);
